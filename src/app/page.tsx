@@ -1,4 +1,4 @@
-// MIT License - Copyright (c) 2026 kiritigowda
+// MIT License - Copyright (c) 2026 SimonCatBot
 // See LICENSE file for details.
 
 "use client";
@@ -22,6 +22,8 @@ import { TasksDashboard } from "@/components/TasksDashboard";
 import { TokenUsageDashboard } from "@/components/TokenUsageDashboard";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { ConnectionPage } from "@/components/ConnectionPage";
+import { PhotoBoothDashboard } from "@/components/PhotoBoothDashboard";
+import { ImageGenDashboard } from "@/components/ImageGenDashboard";
 import { SkillsDashboard } from "@/components/SkillsDashboard";
 import { TabBar, type TabId, getDefaultActiveTabs, VALID_TAB_IDS } from "@/components/TabBar";
 import {
@@ -1579,6 +1581,20 @@ const AgentROCclawPage = () => {
                 {activeTabs.includes("settings") ? (
                   <div className="ui-panel ui-depth-workspace flex h-full min-h-0 flex-1 flex-col overflow-hidden">
                     <SettingsPanel />
+                  </div>
+                ) : null}
+
+                {/* Photo Booth Tab */}
+                {activeTabs.includes("photobooth") ? (
+                  <div className="ui-panel ui-depth-workspace flex h-full min-h-0 flex-1 flex-col overflow-hidden">
+                    <PhotoBoothDashboard />
+                  </div>
+                ) : null}
+
+                {/* Image Gen Tab */}
+                {activeTabs.includes("imagegen") ? (
+                  <div className="ui-panel ui-depth-workspace flex h-full min-h-0 flex-1 flex-col overflow-hidden">
+                    <ImageGenDashboard />
                   </div>
                 ) : null}
               </div>

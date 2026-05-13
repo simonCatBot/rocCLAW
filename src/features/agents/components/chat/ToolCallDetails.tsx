@@ -1,4 +1,4 @@
-// MIT License - Copyright (c) 2026 kiritigowda
+// MIT License - Copyright (c) 2026 SimonCatBot
 // See LICENSE file for details.
 
 import { memo, useState } from "react";
@@ -10,6 +10,7 @@ import {
   ASSISTANT_GUTTER_CLASS,
   ASSISTANT_MAX_WIDTH_EXPANDED_CLASS,
 } from "./chatConstants";
+import { MarkdownImage } from "./MarkdownImage";
 
 export const ToolCallDetails = memo(function ToolCallDetails({
   line,
@@ -43,7 +44,7 @@ export const ToolCallDetails = memo(function ToolCallDetails({
       </summary>
       {open && body ? (
         <div className="agent-markdown agent-tool-markdown mt-1 text-foreground">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ img: MarkdownImage }}>
             {rewriteMediaLinesToMarkdown(body)}
           </ReactMarkdown>
         </div>

@@ -1,4 +1,4 @@
-// MIT License - Copyright (c) 2026 kiritigowda
+// MIT License - Copyright (c) 2026 SimonCatBot
 // See LICENSE file for details.
 
 import { expect, test } from "@playwright/test";
@@ -81,6 +81,7 @@ test("cloud tab uses local defaults when available", async ({ page }) => {
   await page.goto("/");
   // Click Cloud tab
   await page.getByRole("tab", { name: /^Cloud$/ }).click();
+
 
   // Should show Cloud tab content
   await expect(page.getByText("Cloud Setup")).toBeVisible();

@@ -1,4 +1,4 @@
-// MIT License - Copyright (c) 2026 kiritigowda
+// MIT License - Copyright (c) 2026 SimonCatBot
 // See LICENSE file for details.
 
 import type { GatewayClient } from "@/lib/gateway/GatewayClient";

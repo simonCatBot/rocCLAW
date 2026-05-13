@@ -1,4 +1,4 @@
-// MIT License - Copyright (c) 2026 kiritigowda
+// MIT License - Copyright (c) 2026 SimonCatBot
 // See LICENSE file for details.
 
 "use client";
@@ -11,6 +11,7 @@ import { buildDefaultAvatarUrl, deriveDefaultIndex } from "@/features/agents/com
 import { resolveGatewayStatusLabel } from "@/features/agents/components/colorSemantics";
 import { ColorSchemeToggle } from "@/components/ColorSchemeToggle";
 import { AvatarModeToggle } from "@/components/AvatarModeToggle";
+import { TextSizeToggle } from "@/components/TextSizeToggle";
 import { useAvatarMode, type AvatarDisplayMode } from "@/components/AvatarModeContext";
 import type { GatewayStatus } from "@/lib/gateway/gateway-status";
 import { Users, Plug } from "lucide-react";
@@ -146,7 +147,11 @@ export function FooterBar({ status, gatewayVersion: initialVersion, onConnection
 
         <div className="h-4 w-px bg-border/60" />
 
-        {/* Avatar mode + theme — always visible, side by side */}
+        {/* Text size + Avatar mode + theme — always visible, side by side */}
+        <TextSizeToggle />
+
+        <div className="h-4 w-px bg-border/60" />
+
         <AvatarModeToggle />
 
         <div className="h-4 w-px bg-border/60" />

@@ -1,4 +1,4 @@
-// MIT License - Copyright (c) 2026 kiritigowda
+// MIT License - Copyright (c) 2026 SimonCatBot
 // See LICENSE file for details.
 
 const MEDIA_LINE_RE = /^\s*MEDIA:\s*(.+?)\s*$/;
@@ -85,5 +85,11 @@ export const rewriteMediaLinesToMarkdown = (text: string): string => {
     out.push(line);
   }
 
-  return out.join("\n");
+  let result = out.join("\n");
+
+  // Sanitize markdown images with empty URLs to prevent <img src=""> errors.
+  // ![alt]() → alt text; ![]() → removed entirely.
+  result = result.replace(/!\[([^\]]*)\]\(\s*\)/g, (_match, alt) => (alt ? alt : ""));
+
+  return result;
 };

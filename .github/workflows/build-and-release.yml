@@ -34,7 +34,7 @@ jobs:
           cp -r server dist/rocclaw/
           cp package.json dist/rocclaw/
           cp package-lock.json dist/rocclaw/
-          cp next.config.mjs dist/rocclaw/
+          cp next.config.ts dist/rocclaw/
           cp -r public dist/rocclaw/
           cp README.md dist/rocclaw/
           cp LICENSE dist/rocclaw/

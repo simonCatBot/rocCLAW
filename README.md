@@ -9,10 +9,8 @@
 The operator dashboard for [OpenClaw](https://github.com/openclaw) — manage a hybrid fleet of local and cloud agents from any browser. Your GPUs stay busy, your cloud tokens go only where they matter.
 
 [![Node.js](https://img.shields.io/badge/Node.js-20.9%2B-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org)
-[![GitHub Release](https://img.shields.io/github/v/release/kiritigowda/rocCLAW?include_prereleases&logo=github)](https://github.com/kiritigowda/rocCLAW/releases)
+[![GitHub Release](https://img.shields.io/github/v/release/simoncatbot/rocclaw?include_prereleases&logo=github)](https://github.com/simoncatbot/rocclaw/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-
-<img src="public/screenshots/app-main.png" alt="rocCLAW dashboard" width="900" />
 
 </div>
 
@@ -71,7 +69,7 @@ Your browser never talks to the gateway directly. rocCLAW proxies everything sec
 Install via npm, pre-built package, or from source — see [Installation](#installation) for all options.
 
 ```bash
-npm install -g @kiritigowda/rocclaw
+npm install -g @simoncatbot/rocclaw
 rocclaw
 ```
 
@@ -89,6 +87,8 @@ See also: [full install guide](docs/INSTALL.md) · [setup guides →](#setup-gui
 
 ## 🏗️ Local + Cloud Hybrid Fleet
 
+<!-- TODO: Add screenshot showing the token usage dashboard with per-agent/per-model breakdown -->
+
 **Local agents** run on your hardware with open-weight models via [Ollama](https://ollama.com), vLLM, or any local provider. They handle the predictable workload — log monitoring, scheduled reports, file processing, data syncing, health checks. Zero token cost, and they retain memory across sessions so they improve without burning cloud credits.
 
 **Cloud agents** use high-capability models (Claude, GPT, Gemini) for tasks that need it — complex reasoning, multi-step planning, code generation with deep context.
@@ -105,9 +105,15 @@ See also: [full install guide](docs/INSTALL.md) · [setup guides →](#setup-gui
 
 ## ⚡ What You Can Do
 
+<!-- TODO: Add screenshot showing the chat interface with thinking traces -->
+
 **Chat with any agent** — Real-time streaming with thinking traces, tool call visibility, and inline exec approvals. Approve or deny shell commands right in the chat — allow-once, allow-always, or deny.
 
+<!-- TODO: Add screenshot showing the tasks/cron dashboard -->
+
 **Put agents on autopilot** — Schedule recurring jobs with drag-and-drop — run every 5 minutes, daily at 9am, or any cron expression. Agents retain context across sessions and act on heartbeat schedules independently.
+
+<!-- TODO: Add screenshot showing the agent configuration panel -->
 
 **Configure without SSH** — Edit any agent's personality files and permissions directly in the browser. Each agent has 7 personality files that define its behavior:
 
@@ -127,6 +133,8 @@ See also: [full install guide](docs/INSTALL.md) · [setup guides →](#setup-gui
 <a id="monitor-your-hardware"></a>
 
 ## 📊 Monitor Your Hardware
+
+<!-- TODO: Add screenshot showing system metrics and graph view -->
 
 When your agents run on local hardware, you need to see how that hardware is doing. rocCLAW provides live system metrics so you know whether your GPUs are earning their keep or sitting idle.
 
@@ -197,20 +205,9 @@ A hybrid fleet makes sense anywhere you have repetitive work alongside tasks tha
 
 ## 📋 Dashboard at a Glance
 
-<div align="center">
-<table>
-<tr>
-<td align="center"><img src="public/screenshots/app-token.png" alt="Agents, System Metrics, Graph, and Token Usage" width="440" /><br/><em>Agents · System · Graph · Tokens</em></td>
-<td align="center"><img src="public/screenshots/app-skills.png" alt="Skills tab — per-agent skill assignment" width="440" /><br/><em>Skills — per-agent assignment</em></td>
-</tr>
-<tr>
-<td align="center"><img src="public/screenshots/app-tasks.png" alt="Tasks kanban board" width="440" /><br/><em>Tasks — drag-and-drop scheduling</em></td>
-<td align="center"><img src="public/screenshots/app-photo-booth.png" alt="System Metrics and Graph with GPU at full load" width="440" /><br/><em>System · Graph · Photo Booth</em></td>
-</tr>
-</table>
-</div>
+<!-- TODO: Add screenshot showing the full dashboard with multiple tabs open -->
 
-9 toggleable tabs, shown side-by-side:
+10 toggleable tabs, shown side-by-side:
 
 | Tab | What it does |
 |-----|-------------|
@@ -222,6 +219,7 @@ A hybrid fleet makes sense anywhere you have repetitive work alongside tasks tha
 | **Graph** | Time-series charts with 5m / 10m / 30m ranges |
 | **Tasks** | Cron job kanban board with drag-and-drop scheduling |
 | **Tokens** | Per-agent and per-model token usage tracking |
+| **Photo Booth** | Agent avatar generator with pose and style options |
 | **Settings** | Appearance (light/dark theme), gateway, model, and agent configuration |
 
 ---
@@ -233,17 +231,17 @@ A hybrid fleet makes sense anywhere you have repetitive work alongside tasks tha
 ### npm (recommended)
 
 ```bash
-npm install -g @kiritigowda/rocclaw
+npm install -g @simoncatbot/rocclaw
 rocclaw
 ```
 
 ### Pre-built package
 
-Download from [GitHub Releases](https://github.com/kiritigowda/rocCLAW/releases):
+Download from [GitHub Releases](https://github.com/simoncatbot/rocclaw/releases):
 
 ```bash
 # Linux/macOS
-curl -L -o rocclaw.tar.gz https://github.com/kiritigowda/rocCLAW/releases/latest/download/rocclaw-linux-x64.tar.gz
+curl -L -o rocclaw.tar.gz https://github.com/simoncatbot/rocclaw/releases/latest/download/rocclaw-linux-x64.tar.gz
 tar -xzf rocclaw.tar.gz && cd rocclaw
 npm install && node server/index.js
 ```
@@ -251,8 +249,8 @@ npm install && node server/index.js
 ### From source
 
 ```bash
-git clone https://github.com/kiritigowda/rocCLAW.git
-cd rocCLAW
+git clone https://github.com/simonCatBot/rocclaw.git
+cd rocclaw
 npm install
 npm run dev
 ```
@@ -394,6 +392,6 @@ See [Contributing](docs/CONTRIBUTING.md) for full development setup.
 
 <sub>rocCLAW is a community project — not affiliated with or endorsed by AMD.</sub>
 
-<sub>MIT License &copy; 2026 [kiritigowda](https://github.com/kiritigowda)</sub>
+<sub>MIT License &copy; 2026 [SimonCatBot](https://github.com/simoncatbot)</sub>
 
 </div>

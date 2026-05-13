@@ -14,10 +14,10 @@ const buildProps = (overrides?: Partial<Parameters<typeof TabBar>[0]>) => ({
 });
 
 describe("TabBar", () => {
-  it("renders all 9 tab buttons", () => {
+  it("renders all 10 tab buttons", () => {
     render(createElement(TabBar, buildProps()));
     const buttons = screen.getAllByRole("button");
-    expect(buttons).toHaveLength(9);
+    expect(buttons).toHaveLength(10);
   });
 
   it("marks active tabs with aria-pressed=true", () => {
@@ -127,7 +127,7 @@ describe("getDefaultActiveTabs", () => {
 
 describe("VALID_TAB_IDS", () => {
   it("contains all expected tab IDs", () => {
-    const expected: TabId[] = ["agents", "chat", "system", "graph", "tasks", "tokens", "settings", "connection", "skills"];
+    const expected: TabId[] = ["agents", "chat", "system", "graph", "tasks", "tokens", "settings", "connection", "skills", "photobooth"];
     for (const id of expected) {
       expect(VALID_TAB_IDS.has(id)).toBe(true);
     }
@@ -138,7 +138,7 @@ describe("VALID_TAB_IDS", () => {
     expect(VALID_TAB_IDS.has("")).toBe(false);
   });
 
-  it("has 9 entries", () => {
-    expect(VALID_TAB_IDS.size).toBe(9);
+  it("has 10 entries", () => {
+    expect(VALID_TAB_IDS.size).toBe(10);
   });
 });
