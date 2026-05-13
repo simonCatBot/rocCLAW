@@ -38,7 +38,7 @@
     "scripts/verify-native-runtime.mjs",
     "package.json",
     "package-lock.json",
-    "next.config.ts",
+    "next.config.mjs",
     "start.sh",
     "start.bat",
     ".env.example",

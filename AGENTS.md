@@ -179,7 +179,7 @@ import { something } from "@/lib/gateway/agentConfig";
 
 ## Important Caveats
 
-- `next.config.ts` has `ignoreBuildErrors: true` — production builds skip type checking. Type errors are caught by `npm run typecheck` but not by `npm run build`. This is a known issue with a TODO to fix.
+- `next.config.mjs` has `ignoreBuildErrors: true` — production builds skip type checking. Type errors are caught by `npm run typecheck` but not by `npm run build`.
 - The `server/` directory is plain JavaScript (CommonJS), not TypeScript. This is intentional — it's the entry point that boots Next.js.
 - The main `page.tsx` is ~1,650 lines with 30+ useState calls. This is the primary refactoring target. It orchestrates the entire application — gateway connection, agent state, settings, modals, tabs, SSE events, approvals, cron, and all UI layout.
 - TypeScript strict mode is enabled. Production code has no `@ts-ignore`, `@ts-expect-error`, or `as any` casts. Two `@ts-expect-error` annotations exist in test files (`tests/unit/avatarModeContext.test.ts`, `tests/unit/paths.test.ts`) to exercise negative-typing cases.
