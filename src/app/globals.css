@@ -1,0 +1,16 @@
+/* MIT License - Copyright (c) 2026 kiritigowda */
+/* See LICENSE file for details. */
+
+@import "tailwindcss";
+@import "./styles/markdown.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@import "./styles/tokens.css";
+@import "./styles/base.css";
+@import "./styles/components.css";
+@import "./styles/chat.css";
+@import "./styles/typography.css";
+@import "./styles/badges.css";
+@import "./styles/accessibility.css";
+@import "./styles/color-schemes.css";

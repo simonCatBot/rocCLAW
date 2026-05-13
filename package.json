@@ -1,0 +1,104 @@
+{
+  "name": "@kiritigowda/rocclaw",
+  "version": "1.0.0",
+  "description": "Operator dashboard for managing OpenClaw AI agents",
+  "main": "server/index.js",
+  "bin": {
+    "rocclaw": "./server/index.js"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kiritigowda/rocCLAW.git"
+  },
+  "keywords": [
+    "openclaw",
+    "ai",
+    "agent",
+    "dashboard",
+    "chat",
+    "nextjs",
+    "rocclaw"
+  ],
+  "author": "kiritigowda",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kiritigowda/rocCLAW/issues"
+  },
+  "homepage": "https://github.com/kiritigowda/rocCLAW#readme",
+  "files": [
+    ".next/",
+    "server/",
+    "public/",
+    "scripts/verify-native-runtime.mjs",
+    "package.json",
+    "package-lock.json",
+    "next.config.ts",
+    "start.sh",
+    "start.bat",
+    ".env.example",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "verify:native-runtime:check": "node scripts/verify-native-runtime.mjs --check",
+    "verify:native-runtime:repair": "node scripts/verify-native-runtime.mjs --repair",
+    "predev": "node scripts/verify-native-runtime.mjs --repair",
+    "predev:turbo": "node scripts/verify-native-runtime.mjs --repair",
+    "prestart": "node scripts/verify-native-runtime.mjs --check",
+    "dev": "node server/index.js --dev",
+    "dev:turbo": "node server/index.js --dev",
+    "build": "next build",
+    "start": "next build && node server/index.js",
+    "lint": "eslint .",
+    "probe:agent-latency": "node scripts/probe-agent-history-latency.mjs",
+    "probe:fleet-latency": "node scripts/probe-fleet-latency.mjs",
+    "cleanup:ux-artifacts": "node scripts/cleanup-ux-artifacts.mjs",
+    "rocclaw:setup": "node scripts/rocclaw-setup.js",
+    "smoke:dev-server": "node scripts/smoke-dev-server.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest",
+    "e2e": "playwright test",
+    "pw:open:max": "bash scripts/playwright-open-maximized.sh"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@multiavatar/multiavatar": "github:multiavatar/Multiavatar#a9386febe5e992dce0d728269a22b2b74db8d979",
+    "@vercel/otel": "^2.1.0",
+    "better-sqlite3": "^12.6.2",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.563.0",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-markdown": "^10.1.0",
+    "recharts": "^3.8.1",
+    "remark-gfm": "^4.0.1",
+    "systeminformation": "^5.31.5",
+    "tailwind-merge": "^3.4.0",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.0",
+    "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/ws": "^8.18.1",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "eslint-config-prettier": "^10.1.8",
+    "jsdom": "^27.4.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "^4.0.18"
+  }
+}
