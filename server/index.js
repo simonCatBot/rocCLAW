@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // MIT License - Copyright (c) 2026 kiritigowda
 // See LICENSE file for details.
 
