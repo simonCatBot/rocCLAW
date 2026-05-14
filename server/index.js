@@ -1,4 +1,4 @@
-// MIT License - Copyright (c) 2026 SimonCatBot
+// MIT License - Copyright (c) 2026 kiritigowda
 // See LICENSE file for details.
 
 process.env.WS_NO_BUFFER_UTIL = process.env.WS_NO_BUFFER_UTIL || "1";

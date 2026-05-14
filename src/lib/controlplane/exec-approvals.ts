@@ -1,4 +1,4 @@
-// MIT License - Copyright (c) 2026 SimonCatBot
+// MIT License - Copyright (c) 2026 kiritigowda
 // See LICENSE file for details.
 
 import type { ControlPlaneRuntime } from "@/lib/controlplane/runtime";

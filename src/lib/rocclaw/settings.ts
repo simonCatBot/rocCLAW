@@ -1,4 +1,4 @@
-// MIT License - Copyright (c) 2026 SimonCatBot
+// MIT License - Copyright (c) 2026 kiritigowda
 // See LICENSE file for details.
 
 export type ROCclawGatewaySettings = {

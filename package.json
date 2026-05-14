@@ -1,5 +1,5 @@
 {
-  "name": "@simoncatbot/rocclaw",
+  "name": "@kiritigowda/rocclaw",
   "version": "1.0.0",
   "description": "Operator dashboard for managing OpenClaw AI agents",
   "main": "server/index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/simoncatbot/rocclaw.git"
+    "url": "git+https://github.com/kiritigowda/rocclaw.git"
   },
   "keywords": [
     "openclaw",
@@ -22,12 +22,12 @@
     "nextjs",
     "rocclaw"
   ],
-  "author": "SimonCatBot",
+  "author": "kiritigowda",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/simoncatbot/rocclaw/issues"
+    "url": "https://github.com/kiritigowda/rocclaw/issues"
   },
-  "homepage": "https://github.com/simoncatbot/rocclaw#readme",
+  "homepage": "https://github.com/kiritigowda/rocclaw#readme",
   "files": [
     ".next/",
     "server/",

@@ -15,7 +15,7 @@ Use `nvm use` to switch to the pinned version from `.nvmrc`.
 ## Setup
 
 ```bash
-git clone https://github.com/simonCatBot/rocclaw.git
+git clone https://github.com/kiritigowda/rocclaw.git
 cd rocclaw
 npm install
 ```

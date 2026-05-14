@@ -101,4 +101,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Vitest unit test suite (145 files, 1,091 tests)
 - ESLint + TypeScript strict type checking
 - Continuous release workflow on master pushes
-- npm package distribution (`@simoncatbot/rocclaw`)
+- npm package distribution (`@kiritigowda/rocclaw`)

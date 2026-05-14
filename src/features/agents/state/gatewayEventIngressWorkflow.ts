@@ -1,4 +1,4 @@
-// MIT License - Copyright (c) 2026 SimonCatBot
+// MIT License - Copyright (c) 2026 kiritigowda
 // See LICENSE file for details.
 
 import { resolveExecApprovalEventEffects, type ExecApprovalEventEffects } from "@/features/agents/approvals/execApprovalLifecycleWorkflow";

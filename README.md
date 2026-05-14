@@ -9,7 +9,7 @@
 The operator dashboard for [OpenClaw](https://github.com/openclaw) — manage a hybrid fleet of local and cloud agents from any browser. Your GPUs stay busy, your cloud tokens go only where they matter.
 
 [![Node.js](https://img.shields.io/badge/Node.js-20.9%2B-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org)
-[![GitHub Release](https://img.shields.io/github/v/release/simoncatbot/rocclaw?include_prereleases&logo=github)](https://github.com/simoncatbot/rocclaw/releases)
+[![GitHub Release](https://img.shields.io/github/v/release/kiritigowda/rocclaw?include_prereleases&logo=github)](https://github.com/kiritigowda/rocclaw/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 </div>
@@ -69,7 +69,7 @@ Your browser never talks to the gateway directly. rocCLAW proxies everything sec
 Install via npm, pre-built package, or from source — see [Installation](#installation) for all options.
 
 ```bash
-npm install -g @simoncatbot/rocclaw
+npm install -g @kiritigowda/rocclaw
 rocclaw
 ```
 
@@ -231,17 +231,17 @@ A hybrid fleet makes sense anywhere you have repetitive work alongside tasks tha
 ### npm (recommended)
 
 ```bash
-npm install -g @simoncatbot/rocclaw
+npm install -g @kiritigowda/rocclaw
 rocclaw
 ```
 
 ### Pre-built package
 
-Download from [GitHub Releases](https://github.com/simoncatbot/rocclaw/releases):
+Download from [GitHub Releases](https://github.com/kiritigowda/rocclaw/releases):
 
 ```bash
 # Linux/macOS
-curl -L -o rocclaw.tar.gz https://github.com/simoncatbot/rocclaw/releases/latest/download/rocclaw-linux-x64.tar.gz
+curl -L -o rocclaw.tar.gz https://github.com/kiritigowda/rocclaw/releases/latest/download/rocclaw-linux-x64.tar.gz
 tar -xzf rocclaw.tar.gz && cd rocclaw
 npm install && node server/index.js
 ```
@@ -249,7 +249,7 @@ npm install && node server/index.js
 ### From source
 
 ```bash
-git clone https://github.com/simonCatBot/rocclaw.git
+git clone https://github.com/kiritigowda/rocclaw.git
 cd rocclaw
 npm install
 npm run dev
@@ -392,6 +392,6 @@ See [Contributing](docs/CONTRIBUTING.md) for full development setup.
 
 <sub>rocCLAW is a community project — not affiliated with or endorsed by AMD.</sub>
 
-<sub>MIT License &copy; 2026 [SimonCatBot](https://github.com/simoncatbot)</sub>
+<sub>MIT License &copy; 2026 [kiritigowda](https://github.com/kiritigowda)</sub>
 
 </div>
