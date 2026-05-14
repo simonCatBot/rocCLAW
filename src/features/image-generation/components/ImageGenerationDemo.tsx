@@ -4,7 +4,7 @@
 // See LICENSE file for details.
 
 import { useState, useCallback, useEffect } from "react";
-import { Sparkles, Loader, Play, Download, ImageIcon, CheckCircle, AlertTriangle } from "lucide-react";
+import { Sparkles, Loader, Play, Download, CheckCircle, AlertTriangle } from "lucide-react";
 
 interface Character {
   id: string;

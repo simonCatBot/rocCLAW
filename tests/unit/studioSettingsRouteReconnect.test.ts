@@ -110,8 +110,11 @@ describe("studio settings route reconnect behavior", () => {
     const response = await POST();
     expect(response.status).toBe(200);
 
+    // The disconnect route writes to the rocclaw settings directory, not studio
+    const rocclawSettingsPath = path.join(tempDir, "openclaw-rocclaw", "settings.json");
+    expect(fs.existsSync(rocclawSettingsPath)).toBe(true);
     const persisted = JSON.parse(
-      fs.readFileSync(path.join(tempDir, "openclaw-studio", "settings.json"), "utf8")
+      fs.readFileSync(rocclawSettingsPath, "utf8")
     ) as { gatewayAutoStart?: boolean };
     expect(persisted.gatewayAutoStart).toBe(false);
   });

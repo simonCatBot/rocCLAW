@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { type StudioSettingsPatch } from "@/lib/studio/settings";
-import { defaultStudioInstallContext } from "@/lib/studio/install-context";
+import { type StudioInstallContext, defaultStudioInstallContext } from "@/lib/studio/install-context";
 import {
   getControlPlaneRuntime,
   isStudioDomainApiModeEnabled,
@@ -124,9 +124,15 @@ const reconnectRuntimeForGatewaySettingsChange = async (
 const buildSettingsResponseBody = async (metadata?: RuntimeReconnectMetadata | null) => {
   const settings = loadStudioSettings();
   const localGatewayDefaults = loadLocalGatewayDefaults();
-  let installContext = defaultStudioInstallContext();
+  let installContext: StudioInstallContext = defaultStudioInstallContext();
   try {
-    installContext = await detectInstallContext(process.env);
+    const detected = await detectInstallContext(process.env);
+    installContext = {
+      ...defaultStudioInstallContext(),
+      ...detected,
+      studioHost: defaultStudioInstallContext().studioHost,
+      studioCli: defaultStudioInstallContext().studioCli,
+    };
   } catch (error) {
     console.error("Failed to detect Studio install context.", error);
   }

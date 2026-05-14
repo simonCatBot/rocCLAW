@@ -143,3 +143,6 @@ export const resetControlPlaneRuntimeForTests = (): void => {
 export const isROCclawDomainApiModeEnabled = (): boolean => {
   return true;
 };
+
+/** @deprecated Use isROCclawDomainApiModeEnabled */
+export const isStudioDomainApiModeEnabled = isROCclawDomainApiModeEnabled;

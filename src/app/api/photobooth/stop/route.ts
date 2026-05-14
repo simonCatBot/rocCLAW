@@ -64,7 +64,7 @@ async function stopComfyUI(): Promise<{ success: boolean; message: string }> {
       // If SIGTERM fails, try SIGKILL
       try {
         process.kill(pidNum, "SIGKILL");
-      } catch (killError) {
+      } catch {
         return {
           success: false,
           message: "Failed to send stop signal to ComfyUI",

@@ -342,10 +342,10 @@ export async function generateImage(
       if (status === "success") {
         const outputs = entry.outputs || {};
         console.log("[ImageGen] Success - outputs:", Object.keys(outputs));
-        for (const [nodeId, output] of Object.entries(outputs) as [string, { images?: { filename: string }[] }][]) {
-          if (output.images?.length > 0) {
-            console.log("[ImageGen] Found image:", output.images[0].filename);
-            return { success: true, filename: output.images[0].filename };
+        for (const [, output] of Object.entries(outputs) as [string, { images?: { filename: string }[] }][]) {
+          if ((output.images?.length ?? 0) > 0) {
+            console.log("[ImageGen] Found image:", output.images![0].filename);
+            return { success: true, filename: output.images![0].filename };
           }
         }
         return { success: false, error: "No images in output" };

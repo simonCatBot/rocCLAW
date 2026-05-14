@@ -9,11 +9,9 @@ import {
   useState,
   useCallback,
 } from "react";
-import Image from "next/image";
 import {
   Sparkles,
   Loader,
-  Play,
   Download,
   ImageIcon,
   CheckCircle,
@@ -22,7 +20,6 @@ import {
   RefreshCw,
   Power,
   User,
-  Type,
   Square,
   Trash2,
 } from "lucide-react";
@@ -395,7 +392,6 @@ export function ImageGenDashboard() {
     : selectedCharacters.size;
   const totalCombinations = useMemo(() => characterCount * selectedLocations.size, [characterCount, selectedLocations]);
   const completedCount = useMemo(() => jobs.filter((j) => j.status === "success").length, [jobs]);
-  const failedCount = useMemo(() => jobs.filter((j) => j.status === "error").length, [jobs]);
 
   return (
     <div className="flex h-full w-full flex-col overflow-hidden" aria-label="Image Generation">

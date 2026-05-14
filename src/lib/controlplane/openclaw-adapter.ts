@@ -95,7 +95,7 @@ type SerializedControlPlaneGatewayConnectFailure = {
   details?: unknown;
 };
 
-class ControlPlaneGatewayConnectError extends Error {
+export class ControlPlaneGatewayConnectError extends Error {
   readonly code: string;
   readonly profileId: GatewayConnectProfileId;
   readonly details?: unknown;

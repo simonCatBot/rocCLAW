@@ -362,7 +362,7 @@ const normalizeDnsName = (value) => {
   return trimmed.replace(/\.$/, "");
 };
 
-const probeTailscale = async (env = process.env, runner = execFileAsync) => {
+const probeTailscale = async (_env = process.env, runner = execFileAsync) => {
   const result = await runJsonCommand(
     "tailscale",
     ["status", "--json"],

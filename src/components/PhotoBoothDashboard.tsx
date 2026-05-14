@@ -27,7 +27,6 @@ import {
   Upload,
   ImageIcon,
   Trash2,
-  Play,
   Power,
   Square,
 } from "lucide-react";

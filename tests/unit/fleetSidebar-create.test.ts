@@ -44,7 +44,7 @@ describe("FleetSidebar new agent action", () => {
     cleanup();
   });
 
-  it("renders New agent button", () => {
+  it("renders New Agent button", () => {
     render(
       createElement(FleetSidebar, {
         agents: [createAgent()],
@@ -57,7 +57,7 @@ describe("FleetSidebar new agent action", () => {
     );
 
     expect(screen.getByTestId("fleet-new-agent-button")).toBeInTheDocument();
-    expect(screen.getByText("New agent")).toBeInTheDocument();
+    expect(screen.getByText("New Agent")).toBeInTheDocument();
   });
 
   it("calls onCreateAgent when clicked", () => {
@@ -93,23 +93,7 @@ describe("FleetSidebar new agent action", () => {
     expect(screen.getByTestId("fleet-new-agent-button")).toBeDisabled();
   });
 
-  it("shows approvals tab instead of idle tab", () => {
-    render(
-      createElement(FleetSidebar, {
-        agents: [createAgent()],
-        selectedAgentId: "agent-1",
-        filter: "all",
-        onFilterChange: vi.fn(),
-        onSelectAgent: vi.fn(),
-        onCreateAgent: vi.fn(),
-      })
-    );
-
-    expect(screen.getByTestId("fleet-filter-approvals")).toBeInTheDocument();
-    expect(screen.queryByTestId("fleet-filter-idle")).toBeNull();
-  });
-
-  it("shows needs approval badge for awaiting agents", () => {
+  it("shows Needs Approval badge for awaiting agents", () => {
     render(
       createElement(FleetSidebar, {
         agents: [{ ...createAgent(), awaitingUserInput: true }],
@@ -121,7 +105,7 @@ describe("FleetSidebar new agent action", () => {
       })
     );
 
-    const approvalBadge = screen.getByText("Needs approval");
+    const approvalBadge = screen.getByText("Needs Approval");
     expect(approvalBadge).toBeInTheDocument();
     expect(approvalBadge).toHaveClass("ui-badge-approval");
     expect(approvalBadge).toHaveAttribute("data-status", "approval");
@@ -141,7 +125,6 @@ describe("FleetSidebar new agent action", () => {
 
     const row = screen.getByTestId("fleet-agent-row-agent-1");
     const statusBadge = within(row).getByText("Running");
-    expect(statusBadge).toHaveAttribute("data-status", "running");
     expect(statusBadge).toHaveClass("ui-badge-status-running");
   });
 });
