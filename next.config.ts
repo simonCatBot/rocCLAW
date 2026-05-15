@@ -1,6 +1,11 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
   typescript: {
+    // TODO: Set to false and fix all type errors before a major release.
+    // Left as true temporarily to unblock development while type coverage
+    // catches up to the runtime behavior. Type errors will still fail CI
+    // via `npm run typecheck` (tsc --noEmit).
     ignoreBuildErrors: true,
   },
   serverExternalPackages: ["ws", "better-sqlite3", "systeminformation"],

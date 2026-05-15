@@ -1147,7 +1147,7 @@ export function SkillsDashboard() {
               <h2 className="text-sm font-semibold text-foreground">Agents & Skills</h2>
             </div>
             <p className="text-xs text-muted-foreground">
-              Assign SimonCatBot preset skills to each agent. Click a skill to add or remove it.
+              Assign kiritigowda preset skills to each agent. Click a skill to add or remove it.
             </p>
 
             {/* Error state */}
@@ -1259,7 +1259,7 @@ export function SkillsDashboard() {
                 count={filteredFeatured.length}
               >
                 <p className="mb-3 text-xs text-muted-foreground">
-                  Curated skill presets from the SimonCatBot ecosystem. Install and assign to your agents from the left panel.
+                  Curated skill presets from the kiritigowda ecosystem. Install and assign to your agents from the left panel.
                 </p>
                 <div
                   className={`grid gap-2 ${

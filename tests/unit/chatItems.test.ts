@@ -124,12 +124,12 @@ describe("summarizeToolLabel", () => {
     const toolCallLine = formatToolCallMarkdown({
       id: "call_read_1",
       name: "read",
-      arguments: { file_path: "/Users/test/openclaw/shared/openclaw-agent-home/README.md" },
+      arguments: { file_path: "/Users/georgepickett/openclaw/shared/openclaw-agent-home/README.md" },
     });
 
     const summary = summarizeToolLabel(toolCallLine);
     expect(summary.summaryText).toBe(
-      "read /Users/test/openclaw/shared/openclaw-agent-home/README.md"
+      "read /Users/georgepickett/openclaw/shared/openclaw-agent-home/README.md"
     );
     expect(summary.inlineOnly).toBe(true);
     expect(summary.body).toBe("");

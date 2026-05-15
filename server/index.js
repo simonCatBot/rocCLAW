@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // MIT License - Copyright (c) 2026 kiritigowda
 // See LICENSE file for details.
 
@@ -13,9 +12,6 @@ const next = require("next");
 const { createAccessGate } = require("./access-gate");
 const { detectInstallContext, buildStartupGuidance } = require("./rocclaw-install-context");
 const { assertPublicHostAllowed, resolveHosts } = require("./network-policy");
-
-// Resolve the package root so Next.js finds .next/ when installed globally.
-const packageRoot = path.resolve(__dirname, "..");
 
 const resolvePort = () => {
   const raw = process.env.PORT?.trim() || "3000";
@@ -54,7 +50,6 @@ async function main() {
 
   const app = next({
     dev,
-    dir: packageRoot,
     hostname,
     port,
     ...(dev ? { webpack: true } : null),

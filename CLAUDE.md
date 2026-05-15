@@ -1,4 +1,4 @@
-# AGENTS.md — rocCLAW Project Guide
+# CLAUDE.md — rocCLAW Project Guide
 
 ## What is rocCLAW?
 
@@ -32,7 +32,7 @@ npm run build            # Production build
 npm run start            # Build + start production server
 npm run typecheck        # TypeScript strict checking (tsc --noEmit)
 npm run lint             # ESLint
-npm run test             # Unit tests (Vitest, jsdom — 158 files)
+npm run test             # Unit tests (Vitest, jsdom — 145 files, 1,091 tests)
 npm run e2e              # E2E tests (Playwright — 11 specs, requires: npx playwright install)
 ```
 
@@ -146,7 +146,7 @@ server/
   rocclaw-settings.js                 # Settings resolution cascade (~/.openclaw/)
   rocclaw-install-context.js          # Startup environment detection (gateway, Tailscale, CLI version)
 tests/
-  unit/                               # 158 Vitest test files
+  unit/                               # 145 Vitest test files (1,091 tests)
   e2e/                                # 11 Playwright spec files
   setup.ts                            # Test setup (localStorage polyfill, jest-dom matchers)
 ```
@@ -179,10 +179,10 @@ import { something } from "@/lib/gateway/agentConfig";
 
 ## Important Caveats
 
-- `next.config.mjs` has `ignoreBuildErrors: true` — production builds skip type checking. Type errors are caught by `npm run typecheck` but not by `npm run build`.
+- `next.config.ts` has `ignoreBuildErrors: true` — production builds skip type checking. Type errors are caught by `npm run typecheck` but not by `npm run build`. This is a known issue with a TODO to fix.
 - The `server/` directory is plain JavaScript (CommonJS), not TypeScript. This is intentional — it's the entry point that boots Next.js.
 - The main `page.tsx` is ~1,650 lines with 30+ useState calls. This is the primary refactoring target. It orchestrates the entire application — gateway connection, agent state, settings, modals, tabs, SSE events, approvals, cron, and all UI layout.
-- TypeScript strict mode is enabled. Production code has no `@ts-ignore`, `@ts-expect-error`, or `as any` casts. Two `@ts-expect-error` annotations exist in test files (`tests/unit/avatarModeContext.test.ts`, `tests/unit/paths.test.ts`) to exercise negative-typing cases.
+- TypeScript strict mode is enabled. The codebase has zero `@ts-ignore`, `@ts-expect-error`, or `as any` casts.
 - `recharts` is listed as a dependency but may need `npm install` to ensure it's present in `node_modules`. The `SystemGraphView.tsx` component depends on it.
 
 ## Security Rules

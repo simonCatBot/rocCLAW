@@ -5,7 +5,12 @@
 
 import { type ReactNode } from "react";
 import { AvatarModeProvider } from "@/components/AvatarModeContext";
+import { TextSizeProvider } from "@/components/TextSizeContext";
 
 export function Providers({ children }: { children: ReactNode }) {
-  return <AvatarModeProvider>{children}</AvatarModeProvider>;
+  return (
+    <AvatarModeProvider>
+      <TextSizeProvider>{children}</TextSizeProvider>
+    </AvatarModeProvider>
+  );
 }

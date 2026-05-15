@@ -14,10 +14,12 @@ import {
   Link,
   TrendingUp,
   Puzzle,
+  Camera,
+  Sparkles,
   type LucideIcon
 } from "lucide-react";
 
-export type TabId = "agents" | "chat" | "system" | "graph" | "tasks" | "tokens" | "settings" | "connection" | "skills";
+export type TabId = "agents" | "chat" | "system" | "graph" | "tasks" | "tokens" | "settings" | "connection" | "skills" | "photobooth" | "imagegen";
 
 interface TabConfig {
   id: TabId;
@@ -36,6 +38,8 @@ const AVAILABLE_TABS: TabConfig[] = [
   { id: "tasks", label: "Tasks", icon: ListTodo, defaultActive: false },
   { id: "tokens", label: "Tokens", icon: Coins, defaultActive: false },
   { id: "settings", label: "Settings", icon: Settings, defaultActive: false },
+  { id: "photobooth", label: "Photo Booth", icon: Camera, defaultActive: false },
+  { id: "imagegen", label: "Image Gen", icon: Sparkles, defaultActive: false },
 ];
 
 interface TabBarProps {

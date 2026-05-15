@@ -1,0 +1,82 @@
+/* MIT License - Copyright (c) 2026 kiritigowda */
+/* See LICENSE file for details. */
+
+/* Text Size Scaling - Global text size adjustment */
+
+/* Medium text size - increases base font size */
+html[data-text-size="medium"] {
+  font-size: 120%;
+}
+
+/* Large text size - further increases base font size */
+html[data-text-size="large"] {
+  font-size: 132%;
+}
+
+/* Ensure layout stability by scaling down padding/margins proportionally */
+html[data-text-size="medium"] body {
+  --space-1: 3px;
+  --space-2: 6px;
+  --space-3: 10px;
+  --space-4: 14px;
+  --space-6: 20px;
+  --space-8: 28px;
+  --space-12: 40px;
+}
+
+html[data-text-size="large"] body {
+  --space-1: 3px;
+  --space-2: 6px;
+  --space-3: 9px;
+  --space-4: 12px;
+  --space-6: 18px;
+  --space-8: 26px;
+  --space-12: 36px;
+}
+
+/* Scale down footer elements to maintain layout */
+html[data-text-size="medium"] footer .text-xs,
+html[data-text-size="large"] footer .text-xs {
+  font-size: 0.7rem;
+}
+
+html[data-text-size="medium"] footer [class*="text-["],
+html[data-text-size="large"] footer [class*="text-["],
+html[data-text-size="medium"] footer [class*="text-\["],
+html[data-text-size="large"] footer [class*="text-\["] {
+  font-size: 0.7rem !important;
+}
+
+/* Ensure icons and avatar thumbnails stay appropriately sized in footer */
+html[data-text-size="medium"] footer img,
+html[data-text-size="large"] footer img,
+html[data-text-size="medium"] footer [class*="h-6"][class*="w-6"],
+html[data-text-size="large"] footer [class*="h-6"][class*="w-6"] {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+}
+
+/* Keep footer height reasonable */
+html[data-text-size="medium"] footer,
+html[data-text-size="large"] footer {
+  padding: 0.5rem 1.25rem;
+}
+
+/* Ensure buttons in footer stay consistent */
+html[data-text-size="medium"] footer button[class*="h-8"],
+html[data-text-size="large"] footer button[class*="h-8"] {
+  height: 2rem;
+  width: 2rem;
+}
+
+/* Chat bubbles - maintain aspect ratio */
+html[data-text-size="medium"] [class*="chat-bubble"],
+html[data-text-size="large"] [class*="chat-bubble"] {
+  line-height: 1.5;
+}
+
+/* Message input area - keep consistent height */
+html[data-text-size="medium"] textarea,
+html[data-text-size="large"] textarea {
+  min-height: 44px;
+}

@@ -82,8 +82,8 @@ This downloads the latest published package, compiles native dependencies, and s
 ### Option B: From source (development)
 
 ```bash
-git clone https://github.com/kiritigowda/rocCLAW.git
-cd rocCLAW
+git clone https://github.com/kiritigowda/rocclaw.git
+cd rocclaw
 npm install
 npm run dev
 ```
@@ -93,8 +93,8 @@ npm run dev
 ### Option C: From source (production)
 
 ```bash
-git clone https://github.com/kiritigowda/rocCLAW.git
-cd rocCLAW
+git clone https://github.com/kiritigowda/rocclaw.git
+cd rocclaw
 npm install
 npm run build
 node server/index.js

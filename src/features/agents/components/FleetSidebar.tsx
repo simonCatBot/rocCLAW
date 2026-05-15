@@ -161,9 +161,7 @@ export const FleetSidebar = ({
                   data-testid={`fleet-agent-row-${agent.agentId}`}
                   className={`group relative ui-card flex flex-col items-center p-4 text-center border transition-colors min-h-[240px] ${
                     selected
-                      ? agent.status === "running"
-                        ? "ui-card-selected ring-2 ring-green-500 bg-green-500/5"
-                        : "ui-card-selected ring-2 ring-accent bg-primary/5"
+                      ? "ui-card-selected ring-2 ring-accent bg-primary/5"
                       : "hover:bg-surface-2/45"
                   }`}
                   onClick={() => onSelectAgent(agent.agentId)}
@@ -172,10 +170,10 @@ export const FleetSidebar = ({
                   <span
                     aria-hidden="true"
                     className={`absolute top-3 right-3 w-3 h-3 rounded-full border-2 border-background ${
-                      agent.status === "running" ? "bg-green-500" :
-                      agent.status === "error" ? "bg-red-500" :
+                      agent.status === "running" ? "bg-[var(--status-running-fg)]" :
+                      agent.status === "error" ? "bg-[var(--status-error-fg)]" :
                       agent.status === "idle" ? "bg-slate-400" :
-                      "bg-amber-500"
+                      "bg-[var(--status-connecting-fg)]"
                     }`}
                   />
 
