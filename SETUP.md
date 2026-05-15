@@ -9,15 +9,40 @@ A comprehensive guide for setting up the Image Generation and Photo Booth featur
 - **OS**: Linux (Ubuntu 20.04+ recommended) or macOS
 - **Python**: 3.10+
 - **Node.js**: 18+ (for the Next.js app)
-- **GPU**: NVIDIA GPU with CUDA support (recommended) or CPU mode
+- **GPU**: AMD Radeon (ROCm) or NVIDIA (CUDA). CPU mode also supported.
 - **Storage**: ~10GB free space (for models)
 - **Memory**: 16GB+ RAM recommended
+- **VRAM**: 8GB+ for SDXL (48GB+ recommended for high-vram mode)
 
 ---
 
 ## Step 1: Install ComfyUI
 
 ComfyUI is the backend engine for image generation.
+
+### Option A: AMD ROCm (Radeon GPUs)
+
+```bash
+# Clone ComfyUI
+cd ~
+git clone https://github.com/comfyanonymous/ComfyUI.git
+cd ComfyUI
+
+# Create virtual environment (recommended)
+python3 -m venv ~/ComfyUI-venv
+source ~/ComfyUI-venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# For AMD Radeon GPUs (ROCm) - gfx1151 (e.g. Radeon 8060S)
+pip install torch torchvision torchaudio --index-url https://repo.amd.com/rocm/whl/gfx1151/
+
+# For other AMD GPUs, use ROCm nightly:
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/rocm6.4
+```
+
+### Option B: NVIDIA CUDA
 
 ```bash
 # Clone ComfyUI
@@ -28,11 +53,20 @@ cd ComfyUI
 # Install dependencies
 pip install -r requirements.txt
 
-# For NVIDIA GPU support (recommended)
+# For NVIDIA GPU support
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+```
 
-# For CPU-only mode (slower)
+### Option C: CPU-only (slower)
+
+```bash
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+```
+
+**Verify ROCm installation:**
+```bash
+source ~/ComfyUI-venv/bin/activate
+python3 -c "import torch; print(f'PyTorch: {torch.__version__}'); print(f'GPU: {torch.cuda.get_device_name(0)}'); print(f'VRAM: {torch.cuda.get_device_properties(0).total_memory / 1024**3:.1f} GB')"
 ```
 
 ---
@@ -96,7 +130,11 @@ echo 'export COMFYUI_API_URL="http://127.0.0.1:8189"' >> ~/.bashrc
 export COMFYUI_API_URL="http://127.0.0.1:8188"
 
 # Then start ComfyUI on the same port
-python ~/ComfyUI/main.py --listen 127.0.0.1 --port 8188
+# For AMD with high VRAM (keeps models on GPU):
+python ~/ComfyUI/main.py --listen 127.0.0.1 --port 8188 --highvram
+
+# For standard setup:
+# python ~/ComfyUI/main.py --listen 127.0.0.1 --port 8188
 ```
 
 ---
@@ -105,9 +143,13 @@ python ~/ComfyUI/main.py --listen 127.0.0.1 --port 8188
 
 ```bash
 cd ~/ComfyUI
+source ~/ComfyUI-venv/bin/activate
 
-# Start with GPU (default port 8188)
-python main.py --listen 127.0.0.1 --port 8188
+# Start with AMD GPU + high VRAM mode (recommended for 16GB+ VRAM)
+python main.py --listen 127.0.0.1 --port 8188 --highvram
+
+# Start with AMD GPU (normal VRAM mode)
+# python main.py --listen 127.0.0.1 --port 8188
 
 # Or with custom port (must match COMFYUI_API_URL)
 # python main.py --listen 127.0.0.1 --port 8189
@@ -161,7 +203,7 @@ The app will be available at http://localhost:3000
 curl http://127.0.0.1:8188/system_stats
 
 # If no response, restart ComfyUI:
-cd ~/ComfyUI && python main.py --listen 0.0.0.0 --port 8188
+cd ~/ComfyUI && source ~/ComfyUI-venv/bin/activate && python main.py --listen 127.0.0.1 --port 8188 --highvram
 ```
 
 ### "No valid characters specified" Error
@@ -177,7 +219,20 @@ ls -lh ~/ComfyUI/models/checkpoints/
 # If corrupted, re-download the model
 ```
 
-### CUDA Out of Memory
+### GPU Out of Memory (OOM)
+
+**AMD ROCm:**
+```bash
+# Reduce VRAM usage by using normal mode instead of highvram
+cd ~/ComfyUI
+source ~/ComfyUI-venv/bin/activate
+python main.py --listen 127.0.0.1 --port 8188
+
+# Or use CPU mode
+python main.py --cpu --listen 127.0.0.1 --port 8188
+```
+
+**NVIDIA CUDA:**
 ```bash
 # Use CPU mode instead
 cd ~/ComfyUI
@@ -269,8 +324,21 @@ if [ ! -d "$HOME/ComfyUI" ]; then
     cd ~
     git clone https://github.com/comfyanonymous/ComfyUI.git
     cd ComfyUI
+    python3 -m venv ~/ComfyUI-venv
+    source ~/ComfyUI-venv/bin/activate
     pip install -r requirements.txt
-    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+    
+    # Detect GPU and install appropriate PyTorch
+    if rocminfo &>/dev/null; then
+        echo "AMD GPU detected - installing ROCm PyTorch..."
+        pip install torch torchvision torchaudio --index-url https://repo.amd.com/rocm/whl/gfx1151/
+    elif nvidia-smi &>/dev/null; then
+        echo "NVIDIA GPU detected - installing CUDA PyTorch..."
+        pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+    else
+        echo "No GPU detected - installing CPU PyTorch..."
+        pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+    fi
 fi
 
 # Download model if not exists
@@ -282,7 +350,7 @@ if [ ! -f "$HOME/ComfyUI/models/checkpoints/sd_xl_base_1.0.safetensors" ]; then
 fi
 
 echo "=== Setup Complete ==="
-echo "Start ComfyUI: cd ~/ComfyUI && python main.py --listen 0.0.0.0 --port 8188"
+echo "Start ComfyUI: cd ~/ComfyUI && source ~/ComfyUI-venv/bin/activate && python main.py --listen 127.0.0.1 --port 8188 --highvram"
 echo "Start App:      npm run dev"
 ```
 
@@ -293,10 +361,11 @@ Make executable: `chmod +x setup.sh`
 ## Notes
 
 - **GPU**: First generation may take longer (model loading)
+- **AMD APUs**: VRAM is shared system RAM. Adjust UMA frame buffer size in BIOS if needed.
 - **Storage**: Generated images saved in `ComfyUI/output/`
 - **Gallery**: Persisted in browser localStorage
 - **Security**: Photo Booth requires HTTPS or localhost for camera access
 
 ---
 
-_Last updated: 2026-05-10_
+_Last updated: 2026-05-14_

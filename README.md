@@ -29,6 +29,7 @@ The operator dashboard for [OpenClaw](https://github.com/openclaw) — manage a 
 - [Installation](#installation)
 - [Setup Guides](#setup-guides)
 - [Requirements & Compatibility](#requirements--compatibility)
+- [Image Generation Setup](#image-generation-setup)
 - [Development](#development)
 - [Troubleshooting](#troubleshooting)
 - [Documentation](#documentation)
@@ -323,8 +324,55 @@ Keep the terminal open, then connect rocCLAW to `ws://localhost:18789`.
 | **npm** | >= 10 |
 | **OpenClaw Gateway** | Running instance (local or remote) |
 | **ROCm** *(optional)* | >= 7.2.1 (AMD GPU monitoring) |
+| **ComfyUI** *(optional)* | For Photo Booth / Image Generation features |
+| **PyTorch** *(optional)* | ROCm or CUDA, depending on GPU |
 
 For supported platforms and GPU compatibility details, see [Compatibility](docs/COMPATIBILITY.md).
+
+---
+
+<a id="image-generation-setup"></a>
+
+## 🎨 Image Generation Setup
+
+The **Photo Booth** and **Image Generation** features require ComfyUI with Stable Diffusion XL.
+
+### Quick Start
+
+```bash
+# 1. Install ComfyUI with AMD ROCm support
+cd ~
+git clone https://github.com/comfyanonymous/ComfyUI.git
+cd ComfyUI
+python3 -m venv ~/ComfyUI-venv
+source ~/ComfyUI-venv/bin/activate
+pip install -r requirements.txt
+pip install torch torchvision torchaudio --index-url https://repo.amd.com/rocm/whl/gfx1151/
+
+# 2. Download SDXL model
+mkdir -p ~/ComfyUI/models/checkpoints
+cd ~/ComfyUI/models/checkpoints
+wget https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors
+
+# 3. Start ComfyUI
+source ~/ComfyUI-venv/bin/activate
+python main.py --listen 127.0.0.1 --port 8188 --highvram
+
+# 4. Start rocCLAW (in another terminal)
+cd ~/rocclaw
+npm run dev
+```
+
+### GPU Support
+
+| GPU | PyTorch Install |
+|-----|----------------|
+| **AMD Radeon 8060S** (gfx1151) | `pip install torch torchvision torchaudio --index-url https://repo.amd.com/rocm/whl/gfx1151/` |
+| **Other AMD GPUs** | `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/rocm6.4` |
+| **NVIDIA GPUs** | `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118` |
+| **CPU only** | `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu` |
+
+For detailed setup instructions, see [SETUP.md](SETUP.md).
 
 ---
 
@@ -374,6 +422,8 @@ See [Contributing](docs/CONTRIBUTING.md) for full development setup.
 | Document | Description |
 |----------|-------------|
 | [Install Guide](docs/INSTALL.md) | Step-by-step Ubuntu setup with SSH tunnels, Tailscale, env vars |
+| [Setup Guide](SETUP.md) | ComfyUI + Image Generation + Photo Booth setup |
+| [Testing Guide](docs/photo-booth-test.md) | Verify ComfyUI, run generation tests, display output |
 | [Architecture](docs/ARCHITECTURE.md) | Technical deep-dive: data flow, API routes, durability model, security |
 | [Compatibility](docs/COMPATIBILITY.md) | Supported platforms and GPU monitoring details |
 | [Contributing](docs/CONTRIBUTING.md) | Development setup, testing, commit conventions, PR guidelines |
