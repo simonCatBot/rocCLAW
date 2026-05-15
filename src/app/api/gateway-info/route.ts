@@ -26,18 +26,24 @@ export async function GET() {
   const controlPlane = runtimeBootstrap.runtime;
   
   try {
-    // Fetch system-presence from gateway
-    const presenceResult = await controlPlane.callGateway("system-presence", {}) as {
+    // Fetch system-presence from gateway (returns array of presence entries)
+    const presenceResult = await controlPlane.callGateway("system-presence", {}) as Array<{
       host?: string;
       mode?: string;
       deviceId?: string;
       instanceId?: string;
       version?: string;
-    } | undefined;
-    
+    }> | undefined;
+
+    // Extract the gateway's own presence entry (first one, or the one with mode === "gateway")
+    const selfEntry = Array.isArray(presenceResult)
+      ? presenceResult.find((entry) => entry.mode === "gateway") ?? presenceResult[0]
+      : undefined;
+
     return NextResponse.json({
       connected: true,
-      presence: presenceResult,
+      presence: selfEntry,
+      presenceEntries: presenceResult,
     });
   } catch (error) {
     console.error("[gateway-info] Failed to fetch gateway info:", error);
