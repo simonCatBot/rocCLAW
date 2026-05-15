@@ -69,19 +69,19 @@ const FEATURED_SKILLS: {
   category: string;
 }[] = [
   {
-    slug: "proactive-agent",
-    name: "Proactive Agent",
+    slug: "hermes-skills",
+    name: "Hermes Skills",
     emoji: "🦞",
     description:
-      "Transform AI agents from task-followers into proactive partners that anticipate needs and continuously improve. Includes WAL Protocol, Working Buffer, and Autonomous Crons.",
+      "Self-evolution memory management and skill tracking for agents. Track memory at regular intervals, recall past learnings, and evolve capabilities over time.",
     category: "Agent Behavior",
   },
   {
-    slug: "Self-Improving + Proactive Agent",
+    slug: "amitpnyc-self-improving-agent",
     name: "Self-Improving Agent",
     emoji: "🔄",
     description:
-      "Self-reflection + Self-criticism + Self-learning + Self-organizing memory. Agent evaluates its own work, catches mistakes, and improves permanently.",
+      "Log high-signal corrections, tool failures, and recurring workflow lessons to a lightweight .learnings/ directory, then promote only repeating patterns into durable rules.",
     category: "Agent Behavior",
   },
   {
@@ -101,11 +101,11 @@ const FEATURED_SKILLS: {
     category: "Problem Solving",
   },
   {
-    slug: "agent-debate",
-    name: "Agent Debate",
+    slug: "anti-hallucination-skill",
+    name: "Anti-Hallucination",
     emoji: "⚖️",
     description:
-      "Verify facts, reduce hallucinations, and explore multiple viewpoints through structured multi-agent debate. Multiple agents independently answer, then critique and refine.",
+      "Detect and mitigate hallucinations in agent outputs by self-checking facts, verifying claims, and correcting unsupported or contradictory information.",
     category: "Quality & Accuracy",
   },
   {
@@ -123,6 +123,73 @@ const FEATURED_SKILLS: {
     description:
       "Coordinate multiple AI agents as a development team to tackle complex coding projects faster. Like having a team of engineers working in parallel on different parts of your codebase.",
     category: "Development",
+  },
+  {
+    slug: "openspec-skill",
+    name: "OpenSpec",
+    emoji: "🛠️",
+    description:
+      "Spec-driven development for implementing non-trivial changes in existing projects. Generates structured specifications before code changes for better outcomes.",
+    category: "Development",
+  },
+  {
+    slug: "parallel-orchestrate",
+    name: "Parallel Orchestrate",
+    emoji: "🎯",
+    description:
+      "Master orchestration skill that ships implementation plans via parallel Claude Code subagents in isolated git worktrees for safe, concurrent execution.",
+    category: "Multi-Agent",
+  },
+  {
+    slug: "network-ai",
+    name: "Network AI",
+    emoji: "🤝",
+    description:
+      "Local Python orchestration for multi-agent workflows via shared blackboard file, permission gating, token budget scripts, and persistent project context.",
+    category: "Multi-Agent",
+  },
+  {
+    slug: "taskops",
+    name: "TaskOps",
+    emoji: "🐙",
+    description:
+      "Manage AI-agent work as an execution graph instead of a flat TODO list. Structure objectives, task decomposition, run readiness, and execution logging.",
+    category: "Development",
+  },
+  {
+    slug: "clawhub-publish-workflow",
+    name: "ClawHub Publish",
+    emoji: "🔀",
+    description:
+      "Complete workflow for publishing skills to ClawHub. Create, evaluate with dual assessment systems, fix issues, security scan, and publish.",
+    category: "Development",
+  },
+];
+
+const COMMUNITY_SKILLS: typeof FEATURED_SKILLS = [
+  {
+    slug: "proactive-agent",
+    name: "Proactive Agent",
+    emoji: "🚀",
+    description:
+      "Transform AI agents from task-followers into proactive partners that anticipate needs and continuously improve. Includes WAL Protocol, Working Buffer, and Autonomous Crons.",
+    category: "Agent Behavior",
+  },
+  {
+    slug: "self-improving-agent",
+    name: "Self-Improving Agent",
+    emoji: "🧠",
+    description:
+      "Self-reflection + Self-criticism + Self-learning + Self-organizing memory. Agent evaluates its own work, catches mistakes, and improves permanently.",
+    category: "Agent Behavior",
+  },
+  {
+    slug: "agent-debate",
+    name: "Agent Debate",
+    emoji: "⚖️",
+    description:
+      "Verify facts, reduce hallucinations, and explore multiple viewpoints through structured multi-agent debate. Multiple agents independently answer, then critique and refine.",
+    category: "Quality & Accuracy",
   },
   {
     slug: "skill-creator",
@@ -166,7 +233,7 @@ const FEATURED_SKILLS: {
   },
 ];
 
-const CATEGORIES = [...new Set(FEATURED_SKILLS.map((s) => s.category))];
+const CATEGORIES = [...new Set([...FEATURED_SKILLS, ...COMMUNITY_SKILLS].map((s) => s.category))];
 
 // ─── Collapsible Section ─────────────────────────────────────────────────────
 
@@ -619,7 +686,9 @@ export function SkillsDashboard() {
   const [searchResults, setSearchResults] = useState<ClawHubSearchResult[]>([]);
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
+  const [installError, setInstallError] = useState<string | null>(null);
   const [installingSlugs, setInstallingSlugs] = useState<Set<string>>(new Set());
+  const [installedSlugs, setInstalledSlugs] = useState<Set<string>>(new Set());
   const [compactView, setCompactView] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<"all" | "ready" | "needs-setup">("all");
@@ -780,6 +849,7 @@ export function SkillsDashboard() {
   // ── Install skill ────────────────────────────────────────────────────
   const handleInstall = useCallback(
     async (slug: string) => {
+      setInstallError(null);
       setInstallingSlugs((prev) => new Set(prev).add(slug));
       try {
         const res = await fetch("/api/clawhub/install", {
@@ -792,13 +862,12 @@ export function SkillsDashboard() {
           throw new Error(err.error ?? `HTTP ${res.status}`);
         }
         const result = await res.json().catch(() => ({ success: false }));
-        // "Already installed" is fine — refresh skills to reflect current state
-        if (result.alreadyInstalled) {
-          // Skill is already there, just refresh the list
-        }
+        // Track this slug as successfully installed
+        setInstalledSlugs((prev) => new Set(prev).add(slug));
         await fetchSkills();
       } catch (err) {
         console.error("Install failed:", err);
+        setInstallError(`Failed to install "${slug}": ${err instanceof Error ? err.message : "Unknown error"}`);
       } finally {
         setInstallingSlugs((prev) => {
           const next = new Set(prev);
@@ -851,32 +920,59 @@ export function SkillsDashboard() {
   }, [fetchSkills]);
 
   // ── Computed filtered lists ──────────────────────────────────────────
+  // Normalize a name by lowercasing and replacing hyphens/underscores with spaces
+  // so "anti-hallucination-skill" and "Anti Hallucination Skill" both become
+  // "anti hallucination skill"
+  const normalize = (s: string) => s.toLowerCase().replace(/[-_]+/g, " ").trim();
+
   const installedNames = useMemo(
     () => new Set(installedSkills.map((s) => s.name.toLowerCase())),
+    [installedSkills]
+  );
+
+  const installedNamesNormalized = useMemo(
+    () => new Set(installedSkills.map((s) => normalize(s.name))),
     [installedSkills]
   );
 
   /**
    * Check if a skill from ClawHub (slug or displayName) matches
    * an installed skill. Handles name mismatches like:
+   *   ClawHub slug "anti-hallucination-skill" → installed name "Anti Hallucination Skill"
    *   ClawHub slug "gog-v2" → installed name "gog"
-   *   ClawHub displayName "Google Workspace CLI (gog)" → installed name "gog"
+   *   ClawHub slug "amitpnyc-self-improving-agent" → installed name "self-improving-agent"
    */
   const isSkillInstalledFromClawhub = useCallback(
     (slug: string, displayName: string): boolean => {
+      // 0. Check if this slug was successfully installed in this session
+      if (installedSlugs.has(slug)) return true;
+
       const slugLc = slug.toLowerCase();
       const nameLc = displayName.toLowerCase();
 
       // 1. Exact match on slug or displayName
       if (installedNames.has(slugLc) || installedNames.has(nameLc)) return true;
 
-      // 2. Slug stem match: "gog-v2" → stem "gog" matches installed "gog"
-      //    Only strip version-like suffixes (e.g. -v2, -2, -v1.0)
+      // 2. Normalized match: compare with hyphens/spaces normalized
+      //    e.g. slug "anti-hallucination-skill" matches installed "Anti Hallucination Skill"
+      const slugNorm = normalize(slug);
+      const nameNorm = normalize(displayName);
+      if (installedNamesNormalized.has(slugNorm) || installedNamesNormalized.has(nameNorm)) return true;
+
+      // 3. Slug stem match: "gog-v2" → stem "gog" matches installed "gog"
       const slugStem = slugLc.replace(/-v?[\d.]+$/, "");
       if (installedNames.has(slugStem)) return true;
 
-      // 3. DisplayName contains installed name in parentheses or brackets
-      //    e.g. "Google Workspace CLI (gog)" → "gog" is in parens
+      // 4. Installed name is a suffix/prefix of the slug (separated by "-")
+      //    e.g. slug "amitpnyc-self-improving-agent" → installed "self-improving-agent"
+      for (const installedName of installedNames) {
+        if (slugLc.endsWith(`-${installedName}`) || slugLc.startsWith(`${installedName}-`)) return true;
+      }
+      for (const installedName of installedNamesNormalized) {
+        if (slugNorm.endsWith(` ${installedName}`) || slugNorm.startsWith(`${installedName} `)) return true;
+      }
+
+      // 5. DisplayName contains installed name in parentheses or brackets
       for (const installedName of installedNames) {
         const inParens = new RegExp(`[(\\[]${installedName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[)\\]]`, "i");
         if (inParens.test(displayName)) return true;
@@ -884,7 +980,7 @@ export function SkillsDashboard() {
 
       return false;
     },
-    [installedNames]
+    [installedSlugs, installedNames, installedNamesNormalized]
   );
 
   const filteredInstalled = useMemo(() => {
@@ -919,6 +1015,12 @@ export function SkillsDashboard() {
 
   const filteredFeatured = useMemo(() => {
     let skills = FEATURED_SKILLS;
+    if (selectedCategory) skills = skills.filter((s) => s.category === selectedCategory);
+    return skills;
+  }, [selectedCategory]);
+
+  const filteredCommunity = useMemo(() => {
+    let skills = COMMUNITY_SKILLS;
     if (selectedCategory) skills = skills.filter((s) => s.category === selectedCategory);
     return skills;
   }, [selectedCategory]);
@@ -1077,7 +1179,7 @@ export function SkillsDashboard() {
                     footerMode={footerMode}
                     agentSkillCfg={agentSkillConfig.get(agent.agentId) ?? { explicit: false, skills: new Set() }}
                     readyInstalledSkills={readyInstalledSkills}
-                    featuredSkills={filteredFeatured}
+                    featuredSkills={[...filteredFeatured, ...filteredCommunity]}
                     isInstalledFromClawhub={isSkillInstalledFromClawhub}
                     onToggleSkill={handleToggleSkill}
                     onInstallAndAssign={handleInstallAndAssign}
@@ -1134,6 +1236,20 @@ export function SkillsDashboard() {
               </div>
             )}
 
+            {/* Install error */}
+            {installError && (
+              <div className="rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-400 flex items-center justify-between">
+                <span>{installError}</span>
+                <button
+                  onClick={() => setInstallError(null)}
+                  className="ml-2 text-red-400 hover:text-red-300"
+                  aria-label="Dismiss"
+                >
+                  ✕
+                </button>
+              </div>
+            )}
+
             {/* ── Featured Skills Browse ── */}
             {!searchQuery.trim() && (
               <CollapsibleSection
@@ -1153,6 +1269,78 @@ export function SkillsDashboard() {
                   }`}
                 >
                   {filteredFeatured.map((skill) => {
+                    const isInst = isSkillInstalledFromClawhub(skill.slug, skill.name);
+                    const isInstalling = installingSlugs.has(skill.slug);
+                    return (
+                      <div
+                        key={skill.slug}
+                        className="group rounded-xl border border-border bg-surface-1 p-3 shadow-sm transition-all hover:border-accent/40 hover:bg-surface-2/30"
+                      >
+                        <div className="mb-2 flex items-start gap-2">
+                          <span className="text-base leading-none" role="img" aria-label={skill.name}>
+                            {skill.emoji}
+                          </span>
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2">
+                              <p className="truncate text-xs font-semibold text-foreground">{skill.name}</p>
+                              <span className="rounded bg-primary/10 px-1.5 py-0.5 text-[9px] text-primary">
+                                {skill.category}
+                              </span>
+                            </div>
+                            {!compactView && (
+                              <p className="mt-1 line-clamp-2 text-[10px] text-muted-foreground">
+                                {skill.description}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {isInst ? (
+                            <span className="inline-flex items-center gap-1 text-[10px] font-medium text-green-400">
+                              <CheckCircle className="h-3 w-3" />
+                              Installed
+                            </span>
+                          ) : (
+                            <button
+                              onClick={() => handleInstall(skill.slug)}
+                              disabled={isInstalling}
+                              className="inline-flex items-center gap-1 rounded-md bg-primary/90 px-2 py-0.5 text-[10px] font-medium text-primary-foreground hover:bg-primary disabled:opacity-50"
+                            >
+                              {isInstalling ? (
+                                <Loader className="h-3 w-3 animate-spin" />
+                              ) : (
+                                <Download className="h-3 w-3" />
+                              )}
+                              Install
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CollapsibleSection>
+            )}
+
+            {/* ── Community Skills Browse ── */}
+            {!searchQuery.trim() && filteredCommunity.length > 0 && (
+              <CollapsibleSection
+                title="Community Skills"
+                icon={Users}
+                accent="text-muted-foreground"
+                count={filteredCommunity.length}
+              >
+                <p className="mb-3 text-xs text-muted-foreground">
+                  Popular skills from the ClawHub community.
+                </p>
+                <div
+                  className={`grid gap-2 ${
+                    compactView
+                      ? "grid-cols-1"
+                      : "grid-cols-1 sm:grid-cols-2"
+                  }`}
+                >
+                  {filteredCommunity.map((skill) => {
                     const isInst = isSkillInstalledFromClawhub(skill.slug, skill.name);
                     const isInstalling = installingSlugs.has(skill.slug);
                     return (

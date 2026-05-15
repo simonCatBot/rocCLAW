@@ -71,6 +71,7 @@
     "@opentelemetry/api-logs": "^0.216.0",
     "@vercel/otel": "^2.1.0",
     "better-sqlite3": "^12.6.2",
+    "clawhub": "^0.15.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.563.0",
     "next": "16.1.6",
