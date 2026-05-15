@@ -442,7 +442,7 @@ See [Contributing](docs/CONTRIBUTING.md) for full development setup.
 
 <sub>rocCLAW is a community project — not affiliated with or endorsed by AMD.</sub>
 
-<sub>Base framework: [OpenClawStudio](https://github.com/simonCatBot/openclaw-studio)</sub>
+<sub>Base framework: OpenClawStudio</sub>
 
 <sub>MIT License &copy; 2026 [kiritigowda](https://github.com/kiritigowda)</sub>
 
